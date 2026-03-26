@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Radiology Visit — Scottish Rite for Children</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:    #0d1b2a;
+  --teal:    #00b8a9;
+  --teal-dk: #008f83;
+  --teal-lt: #e0f7f5;
+  --gold:    #f5a623;
+  --blue:    #2563eb;
+  --blue-lt: #eff6ff;
+  --purple:  #a855f7;
+  --purple-lt:#fdf2f8;
+  --orange:  #f97316;
+  --orange-lt:#fff7ed;
+  --green:   #16a34a;
+  --green-lt:#f0fdf4;
+  --slate:   #64748b;
+  --border:  #e2e8f0;
+  --bg:      #f7fafa;
+  --white:   #ffffff;
+  --r:       14px;
+  --shadow:  0 2px 12px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 20px rgba(0,0,0,0.10);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--navy); }
+
+.header { background: var(--navy); }
+.stripe { height: 4px; background: linear-gradient(90deg, var(--teal), #00e0cf 50%, var(--gold)); }
+.header-body {
+  max-width: 860px; margin: 0 auto;
+  padding: 28px 24px 24px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+}
+.logo-tag { font-size: 10px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--teal); margin-bottom: 5px; }
+.header h1 { font-family: 'Syne', sans-serif; font-size: 1.75rem; font-weight: 800; color: white; line-height: 1.2; }
+.header h1 span { color: var(--teal); }
+.header-sub { font-size: 0.85rem; color: rgba(255,255,255,0.45); margin-top: 4px; font-weight: 300; }
+.header-pill { background: rgba(0,184,169,0.12); border: 1px solid rgba(0,184,169,0.25); border-radius: 40px; padding: 10px 18px; text-align: center; white-space: nowrap; }
+.hp-num { font-family: 'Syne', sans-serif; font-size: 1.75rem; font-weight: 800; color: var(--teal); line-height: 1; }
+.hp-label { font-size: 0.7rem; color: rgba(255,255,255,0.45); margin-top: 2px; }
+
+.gender-bar { background: white; border-bottom: 1px solid var(--border); padding: 11px 24px; }
+.gender-inner { max-width: 860px; margin: 0 auto; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.gender-label { font-size: 0.8rem; font-weight: 600; color: var(--slate); }
+.gender-btns { display: flex; background: #f1f5f9; border-radius: 40px; padding: 3px; }
+.gbtn { padding: 6px 18px; border-radius: 40px; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 600; background: transparent; color: var(--slate); transition: all 0.18s; }
+.gbtn.active { background: var(--navy); color: white; box-shadow: 0 2px 8px rgba(0,0,0,0.18); }
+.gender-note { font-size: 0.75rem; font-weight: 600; padding: 4px 11px; border-radius: 20px; background: var(--teal-lt); color: var(--teal-dk); }
+
+.tabs-bar { background: white; border-bottom: 2px solid var(--border); position: sticky; top: 0; z-index: 40; box-shadow: 0 2px 6px rgba(0,0,0,0.04); }
+.tabs-inner { max-width: 860px; margin: 0 auto; display: flex; }
+.tab { padding: 14px 24px; border: none; background: transparent; cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 0.88rem; font-weight: 600; color: var(--slate); border-bottom: 3px solid transparent; margin-bottom: -2px; transition: all 0.18s; display: flex; align-items: center; gap: 7px; }
+.tab:hover { color: var(--navy); }
+.tab.active { color: var(--teal-dk); border-bottom-color: var(--teal); }
+.tab-dot { width: 7px; height: 7px; border-radius: 50%; }
+
+.main { max-width: 860px; margin: 0 auto; padding: 28px 20px 72px; }
+.panel { display: none; }
+.panel.active { display: block; }
+
+.intro-strip { background: var(--navy); border-radius: var(--r); padding: 18px 22px; margin-bottom: 22px; display: flex; align-items: center; gap: 14px; }
+.intro-strip-icon { font-size: 1.8rem; flex-shrink: 0; }
+.intro-strip-text { font-size: 0.85rem; color: rgba(255,255,255,0.7); line-height: 1.55; }
+.intro-strip-text strong { color: white; }
+
+.progress-wrap { margin-bottom: 24px; }
+.progress-label { display: flex; justify-content: space-between; font-size: 0.75rem; font-weight: 600; color: var(--slate); margin-bottom: 6px; }
+.progress-track { height: 5px; background: var(--border); border-radius: 10px; overflow: hidden; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, var(--teal), #00e0cf); border-radius: 10px; transition: width 0.4s ease; }
+
+.steps { display: flex; flex-direction: column; gap: 8px; }
+
+.step-item { background: white; border-radius: var(--r); border: 1.5px solid var(--border); box-shadow: var(--shadow); overflow: hidden; transition: box-shadow 0.18s; }
+.step-item.open { box-shadow: var(--shadow-md); }
+.step-item:hover:not(.open) { box-shadow: 0 3px 16px rgba(0,0,0,0.08); }
+
+.step-item[data-color="green"]  { --ac: var(--green);  --ac-lt: var(--green-lt); }
+.step-item[data-color="teal"]   { --ac: var(--teal);   --ac-lt: var(--teal-lt); }
+.step-item[data-color="purple"] { --ac: var(--purple); --ac-lt: var(--purple-lt); }
+.step-item[data-color="gold"]   { --ac: var(--gold);   --ac-lt: #fff8eb; }
+.step-item[data-color="orange"] { --ac: var(--orange); --ac-lt: var(--orange-lt); }
+.step-item[data-color="blue"]   { --ac: var(--blue);   --ac-lt: var(--blue-lt); }
+
+.step-item.open { border-color: var(--ac); }
+
+.step-header { display: grid; grid-template-columns: 52px 1fr auto; align-items: center; gap: 14px; padding: 14px 18px; cursor: pointer; user-select: none; transition: background 0.18s; }
+.step-header:hover { background: #f8fafc; }
+.step-item.open .step-header { background: var(--ac-lt); }
+
+.step-icon-circle { width: 46px; height: 46px; border-radius: 13px; background: var(--ac-lt); border: 2px solid var(--ac); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; transition: all 0.18s; }
+.step-item.open .step-icon-circle { background: var(--ac); }
+
+.step-summary { min-width: 0; }
+.step-title-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 3px; }
+.step-title { font-family: 'Syne', sans-serif; font-size: 0.97rem; font-weight: 700; color: var(--navy); }
+.step-badge { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 20px; background: var(--ac-lt); color: var(--ac); border: 1px solid var(--ac); white-space: nowrap; }
+.step-oneliner { font-size: 0.8rem; color: var(--slate); line-height: 1.4; }
+
+.step-right { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; flex-shrink: 0; }
+.time-pill { background: var(--navy); color: white; border-radius: 20px; padding: 3px 11px; font-size: 11px; font-weight: 600; white-space: nowrap; }
+.chevron { width: 22px; height: 22px; border-radius: 50%; background: #f1f5f9; display: flex; align-items: center; justify-content: center; transition: transform 0.25s, background 0.18s; flex-shrink: 0; }
+.chevron svg { width: 12px; height: 12px; stroke: var(--slate); stroke-width: 2.5; fill: none; }
+.step-item.open .chevron { transform: rotate(180deg); background: var(--ac); }
+.step-item.open .chevron svg { stroke: white; }
+
+.step-body { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; padding: 0 18px; }
+.step-body.open { max-height: 500px; padding: 0 18px 18px; }
+.step-body-inner { padding-top: 14px; border-top: 1px solid var(--border); }
+.step-desc { font-size: 0.875rem; color: #374151; line-height: 1.65; margin-bottom: 10px; }
+.step-tip { background: #fefce8; border-left: 3px solid var(--gold); border-radius: 0 8px 8px 0; padding: 9px 13px; font-size: 0.8rem; color: #78350f; line-height: 1.5; }
+.step-tip::before { content: '💡  '; }
+.step-location { display: inline-flex; align-items: center; gap: 5px; background: #f8fafc; border: 1px solid var(--border); border-radius: 20px; padding: 4px 12px; font-size: 0.78rem; font-weight: 600; color: var(--slate); margin-top: 10px; }
+
+.step-item.preg-only { display: block; }
+body.show-male .step-item.preg-only { display: none; }
+
+/* TIPS TAB */
+.pre-arrival { background: var(--navy); border-radius: var(--r); padding: 24px; margin-bottom: 20px; position: relative; overflow: hidden; }
+.pre-arrival::after { content:''; position:absolute; right:-50px; top:-50px; width:180px; height:180px; background:rgba(0,184,169,0.07); border-radius:50%; }
+.pa-head { font-family:'Syne',sans-serif; font-size:1rem; font-weight:800; color:white; margin-bottom:3px; }
+.pa-sub { font-size:0.8rem; color:rgba(255,255,255,0.45); margin-bottom:18px; }
+.pa-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(190px,1fr)); gap:10px; position:relative; z-index:1; }
+.pa-card { background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:13px 14px; display:flex; gap:11px; align-items:flex-start; transition: background 0.18s; }
+.pa-card:hover { background:rgba(255,255,255,0.12); }
+.pa-icon { font-size:1.25rem; flex-shrink:0; margin-top:1px; }
+.pa-title { font-size:0.82rem; font-weight:700; color:white; margin-bottom:2px; }
+.pa-body { font-size:0.75rem; color:rgba(255,255,255,0.5); line-height:1.45; }
+
+.map-card { background:white; border-radius:var(--r); border:1.5px solid var(--border); box-shadow:var(--shadow); overflow:hidden; margin-bottom:20px; }
+.map-card-head { padding:18px 22px 12px; border-bottom:1px solid var(--border); }
+.map-card-head h3 { font-family:'Syne',sans-serif; font-size:1rem; font-weight:800; margin-bottom:3px; }
+.map-card-head p { font-size:0.8rem; color:var(--slate); }
+.map-scroll { overflow-x:auto; padding:16px 12px; }
+
+.gender-diff { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:20px; }
+.gd-card { border-radius:var(--r); padding:18px; }
+.gd-female { background:var(--purple-lt); border:1.5px solid #e9d5ff; }
+.gd-male   { background:var(--blue-lt);   border:1.5px solid #bfdbfe; }
+.gd-tag { font-size:10px; font-weight:800; letter-spacing:2px; text-transform:uppercase; margin-bottom:8px; }
+.gd-female .gd-tag { color:var(--purple); }
+.gd-male   .gd-tag { color:var(--blue); }
+.gd-list { font-size:0.82rem; color:#374151; line-height:1.8; padding-left:14px; }
+.gd-note { margin-top:9px; font-size:0.75rem; background:white; border-radius:7px; padding:7px 10px; font-weight:500; line-height:1.4; }
+.gd-female .gd-note { color:#7e22ce; }
+.gd-male   .gd-note { color:var(--blue); }
+
+.qt-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:10px; }
+.qt-card { background:white; border-radius:var(--r); padding:14px 16px; border:1.5px solid var(--border); box-shadow:var(--shadow); display:flex; gap:11px; }
+.qt-icon { font-size:1.3rem; flex-shrink:0; }
+.qt-title { font-size:0.82rem; font-weight:700; margin-bottom:2px; }
+.qt-body { font-size:0.75rem; color:var(--slate); line-height:1.45; }
+
+.sh { font-size:10px; font-weight:800; letter-spacing:2.5px; text-transform:uppercase; color:var(--teal-dk); margin-bottom:14px; margin-top:24px; display:flex; align-items:center; gap:8px; }
+.sh::after { content:''; flex:1; height:1px; background:var(--border); }
+.sh:first-child { margin-top:0; }
+
+.stop-cards { display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:10px; padding:0 22px 22px; }
+.sc { border-radius:10px; padding:13px 15px; border:1.5px solid; }
+.sc-head { display:flex; align-items:center; gap:8px; margin-bottom:5px; }
+.sc-num { width:22px;height:22px;border-radius:50%;font-size:11px;font-weight:900;color:white;display:flex;align-items:center;justify-content:center;flex-shrink:0; }
+.sc-title { font-family:'Syne',sans-serif; font-size:0.85rem; font-weight:700; }
+.sc-room { font-size:0.72rem; font-weight:600; margin-bottom:4px; }
+.sc-desc { font-size:0.75rem; color:#475569; line-height:1.5; }
+
+.footer { text-align:center; padding:28px 20px; font-size:0.75rem; color:#94a3b8; border-top:1px solid var(--border); margin-top:8px; }
+.footer strong { color:var(--teal-dk); }
+
+@media(max-width:600px){
+  .header-body { padding:22px 16px 18px; }
+  .header h1 { font-size:1.4rem; }
+  .step-header { grid-template-columns:46px 1fr auto; gap:10px; padding:12px 14px; }
+  .tabs-inner .tab { padding:12px 14px; font-size:0.8rem; }
+  .gender-diff { grid-template-columns:1fr; }
+  .time-pill { display:none; }
+}
+</style>
+</head>
+<body class="show-female">
+
+<div class="header">
+  <div class="stripe"></div>
+  <div class="header-body">
+    <div>
+      <div class="logo-tag">Scottish Rite for Children · Radiology</div>
+      <h1>Your Visit,<br><span>Step by Step</span></h1>
+      <div class="header-sub">Radiology &amp; Lab Visit · Clinic Level</div>
+    </div>
+    <div class="header-pill">
+      <div class="hp-num">~2 hrs</div>
+      <div class="hp-label">Estimated visit</div>
+    </div>
+  </div>
+</div>
+
+<div class="gender-bar">
+  <div class="gender-inner">
+    <span class="gender-label">Show pathway for:</span>
+    <div class="gender-btns">
+      <button class="gbtn active" onclick="setGender('female',this)">Female patients</button>
+      <button class="gbtn" onclick="setGender('male',this)">Male patients</button>
+    </div>
+    <span class="gender-note" id="gnote">⚕ Includes lab screening step</span>
+  </div>
+</div>
+
+<div class="tabs-bar">
+  <div class="tabs-inner">
+    <button class="tab active" onclick="switchTab('visit',this)">
+      <span class="tab-dot" style="background:var(--teal)"></span> Your Visit
+    </button>
+    <button class="tab" onclick="switchTab('dressing',this)">
+      <span class="tab-dot" style="background:var(--orange)"></span> What to Wear
+    </button>
+    <button class="tab" onclick="switchTab('tips',this)">
+      <span class="tab-dot" style="background:var(--gold)"></span> Tips &amp; Map
+    </button>
+    <button class="tab" onclick="switchTab('video',this)">
+      <span class="tab-dot" style="background:#e11d48"></span> Watch Video
+    </button>
+  </div>
+</div>
+
+<div class="main">
+
+<!-- ══ YOUR VISIT TAB ══ -->
+<div id="panel-visit" class="panel active">
+
+  <div class="intro-strip">
+    <div class="intro-strip-icon">👋</div>
+    <div class="intro-strip-text">
+      <strong>Welcome to Scottish Rite for Children.</strong> Today you'll move through a few areas on the Clinic Level. <strong>Tap any step below to see what to expect when you get there.</strong>
+    </div>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-label"><span>Steps explored</span><span id="prog-label">0 of 0 steps</span></div>
+    <div class="progress-track"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+  </div>
+
+  <div class="steps">
+
+    <div class="step-item" data-color="green" onclick="toggleStep(this)">
+      <div class="step-header">
+        <div class="step-icon-circle">🚪</div>
+        <div class="step-summary">
+          <div class="step-title-row"><span class="step-title">Arrive &amp; Check In</span></div>
+          <div class="step-oneliner">Use the kiosk at the Atrium — quick and paperless</div>
+        </div>
+        <div class="step-right">
+          <span class="time-pill">~2 min</span>
+          <div class="chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+        </div>
+      </div>
+      <div class="step-body">
+        <div class="step-body-inner">
+          <div class="step-desc">Head to the <strong>self-service kiosk</strong> in the Atrium. Since you've already filled out your forms before arriving (via the Epic text link), check-in takes under 2 minutes — no waiting at the front desk.</div>
+          <div class="step-tip">If you haven't received a pre-arrival text, a staff member at the desk can help you check in manually.</div>
+          <div class="step-location">📍 Atrium · Suite AC.17 / Appointment Desk AC.17B</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-item" data-color="teal" onclick="toggleStep(this)">
+      <div class="step-header">
+        <div class="step-icon-circle">📋</div>
+        <div class="step-summary">
+          <div class="step-title-row"><span class="step-title">Health Questionnaire</span></div>
+          <div class="step-oneliner">A few quick questions — done before you arrive via text</div>
+        </div>
+        <div class="step-right">
+          <span class="time-pill">Pre-arrival</span>
+          <div class="chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+        </div>
+      </div>
+      <div class="step-body">
+        <div class="step-body-inner">
+          <div class="step-desc">You'll receive a <strong>text message via Epic</strong> with a short prep video and a digital screening questionnaire. Complete both at home before arriving — no clipboard forms at the desk.</div>
+          <div class="step-tip">Watch the prep video — it shows exactly what to wear and what to bring so everything goes faster on the day.</div>
+          <div class="step-location">📱 Sent to your phone via Epic text before your visit</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-item preg-only" data-color="purple" onclick="toggleStep(this)">
+      <div class="step-header">
+        <div class="step-icon-circle">🧪</div>
+        <div class="step-summary">
+          <div class="step-title-row">
+            <span class="step-title">Lab Sample</span>
+            <span class="step-badge">♀ Females only</span>
+          </div>
+          <div class="step-oneliner">Quick routine lab sample collected early in your visit</div>
+        </div>
+        <div class="step-right">
+          <span class="time-pill">~5 min</span>
+          <div class="chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+        </div>
+      </div>
+      <div class="step-body">
+        <div class="step-body-inner">
+          <div class="step-desc">A staff member will collect a small routine lab sample early in your visit. This is done at the start so any results are ready <strong>before</strong> your X-ray — no waiting around later.</div>
+          <div class="step-tip">Drink a glass of water before you arrive — it makes this step quick and easy!</div>
+          <div class="step-location">📍 Lab · Blood Draw CC.86 / CC.86A</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-item" data-color="gold" onclick="toggleStep(this)">
+      <div class="step-header">
+        <div class="step-icon-circle">🩻</div>
+        <div class="step-summary">
+          <div class="step-title-row"><span class="step-title">Radiology Check-In</span></div>
+          <div class="step-oneliner">Your X-ray is already scheduled — just check in and go</div>
+        </div>
+        <div class="step-right">
+          <span class="time-pill">~2 min</span>
+          <div class="chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+        </div>
+      </div>
+      <div class="step-body">
+        <div class="step-body-inner">
+          <div class="step-desc">Head to the Radiology check-in desk. Your X-ray order was <strong>pre-scheduled</strong> from your last appointment — no paperwork, no waiting for approvals. Staff will confirm your arrival and take you straight through.</div>
+          <div class="step-location">📍 Radiology Check-In CC.30A · Waiting CC.30 · Sub-Waiting CC.30D</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-item" data-color="orange" onclick="toggleStep(this)">
+      <div class="step-header">
+        <div class="step-icon-circle">👕</div>
+        <div class="step-summary">
+          <div class="step-title-row"><span class="step-title">Dressing for Your X-Ray</span></div>
+          <div class="step-oneliner">Gym clothes? You may be able to skip the gown entirely</div>
+        </div>
+        <div class="step-right">
+          <span class="time-pill">0–5 min</span>
+          <div class="chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+        </div>
+      </div>
+      <div class="step-body">
+        <div class="step-body-inner">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
+            <div style="background:#f0fdf4;border:1.5px solid #bbf7d0;border-radius:10px;padding:13px;">
+              <div style="font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--green);margin-bottom:6px;">✅ Wearing gym clothes?</div>
+              <div style="font-size:0.82rem;color:#374151;line-height:1.55;">If you wore a loose, metal-free top, active wear, and no underwire — <strong>you may not need a gown at all.</strong> The technician will confirm when you arrive.</div>
+            </div>
+            <div style="background:#fff7ed;border:1.5px solid #fed7aa;border-radius:10px;padding:13px;">
+              <div style="font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--orange);margin-bottom:6px;">👕 Need a gown?</div>
+              <div style="font-size:0.82rem;color:#374151;line-height:1.55;">If you have metal on your clothing, the technician will take you to a private dressing room. Keep your bag with you — no locker needed.</div>
+            </div>
+          </div>
+          <div class="step-tip">Check the <strong>"What to Wear"</strong> tab — wearing the right clothes from home can eliminate this step completely and save several minutes.</div>
+          <div class="step-location">📍 HC Dressing Rooms CC.30E–CC.30J · only if needed</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-item" data-color="blue" onclick="toggleStep(this)">
+      <div class="step-header">
+        <div class="step-icon-circle">📸</div>
+        <div class="step-summary">
+          <div class="step-title-row"><span class="step-title">X-Ray Exam</span></div>
+          <div class="step-oneliner">Quick and painless — just hold still for a few seconds</div>
+        </div>
+        <div class="step-right">
+          <span class="time-pill">~5–10 min</span>
+          <div class="chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+        </div>
+      </div>
+      <div class="step-body">
+        <div class="step-body-inner">
+          <div class="step-desc">The radiology technician will take your X-ray. It's completely painless — you'll hold still in one or two positions for a few seconds each. Results go <strong>directly to your doctor</strong> right away.</div>
+          <div class="step-tip">For scoliosis / EOS scans: the spine is imaged last. The 3D EOS involves a small amount more radiation — ask the technician any questions you have.</div>
+          <div class="step-location">📍 X-Ray Rooms CC.205 · CC.222 · CC.235 · CC.249 · CC.250 · EOS CC.34</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-item" data-color="teal" onclick="toggleStep(this)">
+      <div class="step-header">
+        <div class="step-icon-circle">👨‍⚕️</div>
+        <div class="step-summary">
+          <div class="step-title-row"><span class="step-title">See Your Doctor</span></div>
+          <div class="step-oneliner">Your doctor reviews your X-ray and discusses next steps</div>
+        </div>
+        <div class="step-right">
+          <span class="time-pill">~20–30 min</span>
+          <div class="chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+        </div>
+      </div>
+      <div class="step-body">
+        <div class="step-body-inner">
+          <div class="step-desc">Staff will bring you from the X-ray room directly to your exam room. Your doctor will have already reviewed your results and will walk you through what they found. If you wore gym clothes and skipped the gown, <strong>no change needed</strong> — you're already set.</div>
+          <div class="step-tip">Write down any questions you want to ask beforehand — this is the best time to get answers from your care team.</div>
+          <div class="step-location">📍 Clinic Exam Rooms · B &amp; C Wings</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-item" data-color="green" onclick="toggleStep(this)">
+      <div class="step-header">
+        <div class="step-icon-circle">📅</div>
+        <div class="step-summary">
+          <div class="step-title-row"><span class="step-title">Check Out &amp; Next Visit</span></div>
+          <div class="step-oneliner">Schedule your follow-up and you're all done!</div>
+        </div>
+        <div class="step-right">
+          <span class="time-pill">~5 min</span>
+          <div class="chevron"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+        </div>
+      </div>
+      <div class="step-body">
+        <div class="step-body-inner">
+          <div class="step-desc">Stop at the front desk to schedule your next follow-up. Your next visit is often already pre-loaded in the system, making checkout fast. Staff can help with any referrals or paperwork before you leave.</div>
+          <div class="step-location">📍 Clinic Front Desk · AC.17B</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── VERIFICATION CARD ── -->
+  <div id="verify-card" style="margin-top:28px;border-radius:var(--r);border:2px solid var(--border);background:white;box-shadow:var(--shadow);overflow:hidden;transition:border-color 0.3s;">
+    <div style="padding:20px 22px 16px;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+        <span id="verify-icon" style="font-size:1.4rem;">🔒</span>
+        <div>
+          <div style="font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;color:var(--navy);" id="verify-title">Almost there — review all three tabs first</div>
+          <div style="font-size:0.78rem;color:var(--slate);margin-top:1px;" id="verify-sub">Read through Your Visit, What to Wear, and Tips &amp; Map to unlock this confirmation.</div>
+        </div>
+      </div>
+      <!-- Tab checklist -->
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 16px;">
+        <div id="check-visit" style="display:flex;align-items:center;gap:6px;padding:6px 13px;border-radius:20px;border:1.5px solid var(--border);background:#f8fafc;font-size:0.8rem;font-weight:600;color:var(--slate);transition:all 0.25s;">
+          <span id="chk-v">○</span> Your Visit
+        </div>
+        <div id="check-dressing" style="display:flex;align-items:center;gap:6px;padding:6px 13px;border-radius:20px;border:1.5px solid var(--border);background:#f8fafc;font-size:0.8rem;font-weight:600;color:var(--slate);transition:all 0.25s;">
+          <span id="chk-d">○</span> What to Wear
+        </div>
+        <div id="check-tips" style="display:flex;align-items:center;gap:6px;padding:6px 13px;border-radius:20px;border:1.5px solid var(--border);background:#f8fafc;font-size:0.8rem;font-weight:600;color:var(--slate);transition:all 0.25s;">
+          <span id="chk-t">○</span> Tips &amp; Map
+        </div>
+        <div id="check-video" style="display:flex;align-items:center;gap:6px;padding:6px 13px;border-radius:20px;border:1.5px solid var(--border);background:#f8fafc;font-size:0.8rem;font-weight:600;color:var(--slate);transition:all 0.25s;">
+          <span id="chk-vid">○</span> Watch Video
+        </div>
+      </div>
+      <!-- Confirmation form (hidden until unlocked) -->
+      <div id="confirm-form" style="display:none;">
+        <div style="height:1px;background:var(--border);margin-bottom:16px;"></div>
+        <div style="font-size:0.85rem;color:#374151;line-height:1.6;margin-bottom:14px;">
+          By confirming below, you acknowledge that you have reviewed all visit information, understand the steps involved, and know what to wear and where to go.
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:16px;" id="confirm-checks">
+          <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:0.85rem;color:#374151;line-height:1.5;">
+            <input type="checkbox" id="c1" onchange="checkConfirm()" style="width:16px;height:16px;margin-top:2px;accent-color:var(--teal);flex-shrink:0;">
+            I understand the steps for my visit today and know where each area is located.
+          </label>
+          <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:0.85rem;color:#374151;line-height:1.5;">
+            <input type="checkbox" id="c2" onchange="checkConfirm()" style="width:16px;height:16px;margin-top:2px;accent-color:var(--teal);flex-shrink:0;">
+            I have read the clothing guidance and understand what to wear / what to avoid.
+          </label>
+          <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:0.85rem;color:#374151;line-height:1.5;">
+            <input type="checkbox" id="c3" onchange="checkConfirm()" style="width:16px;height:16px;margin-top:2px;accent-color:var(--teal);flex-shrink:0;">
+            I have reviewed the building map and know where to go on arrival.
+          </label>
+          <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:0.85rem;color:#374151;line-height:1.5;">
+            <input type="checkbox" id="c4" onchange="checkConfirm()" style="width:16px;height:16px;margin-top:2px;accent-color:var(--teal);flex-shrink:0;">
+            I have watched the visit walkthrough video (or will do so before arriving).
+          </label>
+        </div>
+        <button id="confirm-btn" onclick="submitConfirm()" disabled
+          style="width:100%;padding:13px;border-radius:10px;border:none;background:#e2e8f0;color:#94a3b8;font-family:'DM Sans',sans-serif;font-size:0.92rem;font-weight:700;cursor:not-allowed;transition:all 0.25s;">
+          Confirm I've Reviewed Everything
+        </button>
+      </div>
+      <!-- Confirmed state (hidden until submitted) -->
+      <div id="confirmed-state" style="display:none;text-align:center;padding:8px 0 4px;">
+        <div style="font-size:2rem;margin-bottom:6px;">✅</div>
+        <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;color:var(--green);margin-bottom:4px;">All done — you're ready for your visit!</div>
+        <div style="font-size:0.8rem;color:var(--slate);">Thank you for taking the time to review everything. See you soon!</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end panel-visit -->
+
+<!-- ══ WHAT TO WEAR TAB ══ -->
+<div id="panel-dressing" class="panel">
+
+  <div class="intro-strip">
+    <div class="intro-strip-icon">👗</div>
+    <div class="intro-strip-text">
+      <strong>Getting dressed right saves everyone time.</strong> Read Part 1 before you leave home, and Part 2 when you arrive at the dressing rooms.
+    </div>
+  </div>
+
+  <!-- PART 1: Dress from home -->
+  <div style="background:white;border-radius:var(--r);border:1.5px solid var(--border);box-shadow:var(--shadow);overflow:hidden;margin-bottom:16px;">
+    <div style="background:var(--orange);padding:16px 22px;display:flex;align-items:center;gap:12px;">
+      <span style="font-size:1.5rem;">🏠</span>
+      <div>
+        <div style="font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;color:white;">Part 1 — What to Wear From Home</div>
+        <div style="font-size:0.78rem;color:rgba(255,255,255,0.75);margin-top:2px;">Do this before you leave — it makes everything faster once you're here</div>
+      </div>
+    </div>
+    <div style="padding:22px;">
+      <p style="font-size:0.875rem;color:#374151;line-height:1.65;margin-bottom:18px;">
+        Wear something <strong>comfortable and easy to take off</strong> — think gym clothes or active wear. You'll be changing into a gown for the X-ray, so the easier your outfit is to remove and put back on, the faster the whole process goes.
+      </p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px;">
+        <div style="background:#f0fdf4;border:1.5px solid #bbf7d0;border-radius:var(--r);padding:14px 16px;">
+          <div style="font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--green);margin-bottom:10px;">✅ Great choices</div>
+          <ul style="font-size:0.82rem;color:#374151;line-height:2;padding-left:14px;">
+            <li>T-shirt or loose top</li>
+            <li>Athletic shorts or joggers</li>
+            <li>Slip-on shoes or sneakers</li>
+            <li>Sports bra (no underwire)</li>
+            <li>Leggings or sweatpants</li>
+          </ul>
+        </div>
+        <div style="background:#fff0f0;border:1.5px solid #fecaca;border-radius:var(--r);padding:14px 16px;">
+          <div style="font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#dc2626;margin-bottom:10px;">❌ Avoid these</div>
+          <ul style="font-size:0.82rem;color:#374151;line-height:2;padding-left:14px;">
+            <li>Underwire bra</li>
+            <li>Jeans with metal buttons / zippers</li>
+            <li>Belts with metal buckles</li>
+            <li>Necklaces or chains near chest</li>
+            <li>Tight-fitting clothing</li>
+          </ul>
+        </div>
+      </div>
+      <div style="background:#fefce8;border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:10px 14px;font-size:0.82rem;color:#78350f;line-height:1.55;">
+        💡 <strong>Why it matters:</strong> Metal near your chest or back can interfere with the X-ray image and may mean having to redo it. Loose clothing also means you spend less time in the dressing room — getting you to your doctor faster.
+      </div>
+    </div>
+  </div>
+
+  <!-- PART 2: Gown dressing -->
+  <div style="background:white;border-radius:var(--r);border:1.5px solid var(--border);box-shadow:var(--shadow);overflow:hidden;margin-bottom:16px;">
+    <div style="background:var(--navy);padding:16px 22px;display:flex;align-items:center;gap:12px;">
+      <span style="font-size:1.5rem;">🏥</span>
+      <div>
+        <div style="font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;color:white;">Part 2 — Changing into Your Gown (at the Clinic)</div>
+        <div style="font-size:0.78rem;color:rgba(255,255,255,0.6);margin-top:2px;">This happens after Radiology check-in, in the HC Dressing Rooms</div>
+      </div>
+    </div>
+    <div style="padding:22px;">
+      <p style="font-size:0.875rem;color:#374151;line-height:1.65;margin-bottom:18px;">
+        A technician will take you to one of the private <strong>HC Dressing Rooms (CC.30E–CC.30J)</strong>. You'll be given a clean hospital gown to change into. Here's what to know:
+      </p>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:18px;">
+        <div style="display:flex;align-items:flex-start;gap:12px;padding:12px 14px;background:#f8fafc;border-radius:10px;border:1px solid var(--border);">
+          <span style="font-size:1.2rem;flex-shrink:0;">🎒</span>
+          <div style="font-size:0.85rem;color:#374151;line-height:1.55;"><strong>Keep your bag and clothes with you.</strong> No locker needed — carry everything into the dressing room and take it with you throughout.</div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:12px;padding:12px 14px;background:#f8fafc;border-radius:10px;border:1px solid var(--border);">
+          <span style="font-size:1.2rem;flex-shrink:0;">🔒</span>
+          <div style="font-size:0.85rem;color:#374151;line-height:1.55;"><strong>The rooms are private.</strong> Each HC dressing room has a door that locks. Take your time — there's no rush.</div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:12px;padding:12px 14px;background:#f0fdf4;border-radius:10px;border:1px solid #bbf7d0;">
+          <span style="font-size:1.2rem;flex-shrink:0;">✅</span>
+          <div style="font-size:0.85rem;color:#374151;line-height:1.55;"><strong>The gown stays on for your doctor's visit.</strong> You won't need to get changed again before seeing your doctor — saving a whole extra step.</div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:12px;padding:12px 14px;background:#f8fafc;border-radius:10px;border:1px solid var(--border);">
+          <span style="font-size:1.2rem;flex-shrink:0;">👕</span>
+          <div style="font-size:0.85rem;color:#374151;line-height:1.55;"><strong>Remove everything from the waist up</strong> including any chest or back jewellery before putting on the gown. Keep bottoms on unless instructed otherwise.</div>
+        </div>
+      </div>
+      <div style="background:#fefce8;border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:10px 14px;font-size:0.82rem;color:#78350f;line-height:1.55;">
+        💡 If you wore the right clothes from home (Part 1), this whole step takes about 2–3 minutes.
+      </div>
+      <div style="margin-top:12px;display:inline-flex;align-items:center;gap:6px;background:#f8fafc;border:1px solid var(--border);border-radius:20px;padding:5px 13px;font-size:0.78rem;font-weight:600;color:var(--slate);">
+        📍 HC Dressing Rooms CC.30E · CC.30F · CC.30G · CC.30H · CC.30J
+      </div>
+    </div>
+  </div>
+
+</div><!-- end panel-dressing -->
+
+<!-- ══ TIPS & MAP TAB ══ -->
+<div id="panel-tips" class="panel">
+
+  <div class="pre-arrival">
+    <div class="pa-head">Before You Arrive — Quick Checklist</div>
+    <div class="pa-sub">Do these before leaving home for a smoother visit</div>
+    <div class="pa-grid">
+      <div class="pa-card"><div class="pa-icon">📱</div><div><div class="pa-title">Watch the prep video</div><div class="pa-body">Scottish Rite sends a short video via Epic text explaining your visit. Watch it before coming in.</div></div></div>
+      <div class="pa-card"><div class="pa-icon">✅</div><div><div class="pa-title">Fill out forms at home</div><div class="pa-body">Complete the screening questionnaire via the link in your text — no clipboard at the desk.</div></div></div>
+      <div class="pa-card"><div class="pa-icon">💧</div><div><div class="pa-title">Drink water before arriving</div><div class="pa-body">Staying hydrated helps with any lab sample collection and keeps you feeling your best during the visit.</div></div></div>
+      <div class="pa-card"><div class="pa-icon">👕</div><div><div class="pa-title">Dress easy-to-remove</div><div class="pa-body">Loose top &amp; bottoms, no metal near your torso. You'll only need to change once.</div></div></div>
+      <div class="pa-card"><div class="pa-icon">🎒</div><div><div class="pa-title">Bring a small bag</div><div class="pa-body">You'll carry your clothes throughout — no locker needed. A tote or backpack is perfect.</div></div></div>
+      <div class="pa-card"><div class="pa-icon">🧸</div><div><div class="pa-title">Bring a comfort item</div><div class="pa-body">Headphones, a book, or a favourite item for any waiting periods.</div></div></div>
+    </div>
+  </div>
+
+  <div class="map-card">
+    <div class="map-card-head">
+      <h3>Clinic Level — Your Journey Through the Building</h3>
+      <p>All stops are on the same floor. Numbers match your visit steps above.</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;align-items:center;">
+        <span style="font-size:0.75rem;font-weight:600;color:var(--slate);">Showing path for:</span>
+        <span id="map-gender-tag" style="background:var(--purple-lt);color:var(--purple);border-radius:20px;padding:3px 11px;font-size:0.75rem;font-weight:700;">♀ Female patients</span>
+      </div>
+    </div>
+    <div class="map-scroll">
+    <svg viewBox="0 0 880 390" xmlns="http://www.w3.org/2000/svg"
+         style="width:100%;min-width:560px;max-width:880px;display:block;font-family:'DM Sans',sans-serif;">
+      <defs>
+        <filter id="ds"><feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="rgba(0,0,0,0.10)"/></filter>
+        <filter id="ds2"><feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="rgba(0,0,0,0.15)"/></filter>
+        <marker id="arr" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#00b8a9"/></marker>
+        <marker id="arr-p" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#a855f7"/></marker>
+      </defs>
+
+      <rect x="10" y="20" width="860" height="310" rx="10" fill="white" stroke="#e2e8f0" stroke-width="1.8" filter="url(#ds)"/>
+
+      <rect x="14" y="24" width="248" height="302" rx="8" fill="#f0fdf4" opacity="0.55"/>
+      <text x="28" y="40" font-size="9.5" font-weight="700" fill="#166534" letter-spacing="2" opacity="0.6">A WING</text>
+      <rect x="266" y="24" width="258" height="302" rx="0" fill="#eff6ff" opacity="0.45"/>
+      <text x="280" y="40" font-size="9.5" font-weight="700" fill="#1e40af" letter-spacing="2" opacity="0.6">B WING</text>
+      <rect x="528" y="24" width="338" height="302" rx="0" fill="#fef9f0" opacity="0.45"/>
+      <text x="542" y="40" font-size="9.5" font-weight="700" fill="#92400e" letter-spacing="2" opacity="0.6">C WING — RADIOLOGY</text>
+
+      <rect x="14" y="152" width="856" height="26" fill="#e2e8f0" opacity="0.5" rx="2"/>
+      <text x="440" y="169" font-size="8.5" fill="#94a3b8" font-weight="600" text-anchor="middle" letter-spacing="0.5">MAIN CORRIDOR</text>
+
+      <!-- background filler rooms -->
+      <rect x="20" y="50" width="108" height="98" rx="5" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1"/>
+      <text x="74" y="103" font-size="8" fill="#cbd5e1" font-weight="600" text-anchor="middle">Dining / Kitchen</text>
+      <rect x="20" y="182" width="108" height="60" rx="5" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1"/>
+      <text x="74" y="216" font-size="8" fill="#cbd5e1" font-weight="600" text-anchor="middle">Café / Gift Shop</text>
+      <rect x="20" y="256" width="108" height="64" rx="5" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1"/>
+      <text x="74" y="292" font-size="8" fill="#cbd5e1" font-weight="600" text-anchor="middle">Pharmacy</text>
+      <rect x="274" y="50" width="112" height="98" rx="5" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1"/>
+      <text x="330" y="103" font-size="8" fill="#cbd5e1" font-weight="600" text-anchor="middle">ABC Clinic Rooms</text>
+      <rect x="274" y="182" width="112" height="60" rx="5" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1"/>
+      <text x="330" y="216" font-size="8" fill="#cbd5e1" font-weight="600" text-anchor="middle">Admitting</text>
+      <rect x="274" y="256" width="112" height="64" rx="5" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1"/>
+      <text x="330" y="292" font-size="8" fill="#cbd5e1" font-weight="600" text-anchor="middle">Olympic Clinic</text>
+      <rect x="724" y="182" width="140" height="138" rx="5" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1"/>
+      <text x="794" y="256" font-size="8" fill="#cbd5e1" font-weight="600" text-anchor="middle">MRI / CT / Ultrasound</text>
+
+      <!-- STOP 1: Entrance & Atrium -->
+      <rect x="140" y="50" width="112" height="98" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="2.2" filter="url(#ds)"/>
+      <text x="196" y="80" font-size="8.5" fill="#166534" font-weight="700" text-anchor="middle">ENTRANCE</text>
+      <text x="196" y="92" font-size="8.5" fill="#166534" font-weight="700" text-anchor="middle">&amp; ATRIUM</text>
+      <text x="196" y="105" font-size="7.5" fill="#15803d" text-anchor="middle">AC.17 / AC.17B</text>
+      <text x="196" y="118" font-size="7.5" fill="#15803d" text-anchor="middle">Kiosk Check-In</text>
+      <text x="196" y="131" font-size="7.5" fill="#166534" font-weight="600" text-anchor="middle">Stops 1 &amp; 7</text>
+      <circle cx="196" cy="68" r="12" fill="#16a34a" filter="url(#ds2)"/>
+      <text x="196" y="72.5" font-size="10" fill="white" font-weight="900" text-anchor="middle">1</text>
+      <rect x="162" y="320" width="68" height="34" rx="6" fill="#16a34a"/>
+      <text x="196" y="334" font-size="8.5" fill="white" font-weight="800" text-anchor="middle">🚪 ENTER</text>
+      <text x="196" y="346" font-size="7.5" fill="rgba(255,255,255,0.8)" text-anchor="middle">AC.20 entrance</text>
+      <line x1="196" y1="318" x2="196" y2="150" stroke="#16a34a" stroke-width="2" stroke-dasharray="5,4" opacity="0.5" marker-end="url(#arr)"/>
+
+      <!-- STOP 2: Lab — now at bottom-center (was Doctor Visit) ♀ only -->
+      <g id="lab-stop">
+        <rect x="390" y="256" width="140" height="64" rx="8" fill="#fdf2f8" stroke="#a855f7" stroke-width="2.2" filter="url(#ds)"/>
+        <text x="460" y="278" font-size="8.5" fill="#7e22ce" font-weight="700" text-anchor="middle">LAB / BLOOD</text>
+        <text x="460" y="290" font-size="8.5" fill="#7e22ce" font-weight="700" text-anchor="middle">DRAW</text>
+        <text x="460" y="303" font-size="7.5" fill="#9333ea" text-anchor="middle">CC.86 · CC.86A</text>
+        <text x="460" y="314" font-size="7" fill="#c026d3" font-weight="600" text-anchor="middle">♀ Females only</text>
+        <circle cx="460" cy="278" r="12" fill="#a855f7" filter="url(#ds2)"/>
+        <text x="460" y="282.5" font-size="10" fill="white" font-weight="900" text-anchor="middle">2</text>
+      </g>
+
+      <!-- STOP 3: Radiology Check-In — now at C-wing middle (was Lab) -->
+      <rect x="536" y="182" width="112" height="70" rx="8" fill="#fef9c3" stroke="#f59e0b" stroke-width="2.2" filter="url(#ds)"/>
+      <text x="592" y="206" font-size="8.5" fill="#92400e" font-weight="700" text-anchor="middle">RADIOLOGY</text>
+      <text x="592" y="218" font-size="8.5" fill="#92400e" font-weight="700" text-anchor="middle">CHECK-IN</text>
+      <text x="592" y="231" font-size="7.5" fill="#b45309" text-anchor="middle">CC.30 / CC.30A</text>
+      <text x="592" y="244" font-size="7.5" fill="#b45309" text-anchor="middle">Sub-Wait CC.30D</text>
+      <circle cx="592" cy="217" r="12" fill="#f59e0b" filter="url(#ds2)"/>
+      <text x="592" y="221.5" font-size="10" fill="white" font-weight="900" text-anchor="middle">3</text>
+
+      <!-- STOP 4: Dressing Rooms — now at C-wing top (was Ortho/Neuro) -->
+      <rect x="536" y="50" width="108" height="98" rx="8" fill="#fff7ed" stroke="#f97316" stroke-width="2.2" filter="url(#ds)"/>
+      <text x="590" y="78" font-size="8.5" fill="#9a3412" font-weight="700" text-anchor="middle">DRESSING</text>
+      <text x="590" y="90" font-size="8.5" fill="#9a3412" font-weight="700" text-anchor="middle">ROOMS</text>
+      <text x="590" y="103" font-size="7.5" fill="#c2410c" text-anchor="middle">CC.30E – CC.30J</text>
+      <text x="590" y="116" font-size="7" fill="#ea580c" font-weight="600" text-anchor="middle">👕 Change here</text>
+      <circle cx="590" cy="68" r="12" fill="#f97316" filter="url(#ds2)"/>
+      <text x="590" y="72.5" font-size="10" fill="white" font-weight="900" text-anchor="middle">4</text>
+
+      <!-- STOP 5: X-Ray Rooms — same position -->
+      <rect x="650" y="50" width="204" height="128" rx="8" fill="#dbeafe" stroke="#2563eb" stroke-width="2.2" filter="url(#ds)"/>
+      <text x="752" y="76" font-size="9" fill="#1e40af" font-weight="800" text-anchor="middle">X-RAY ROOMS</text>
+      <text x="752" y="90" font-size="7.5" fill="#1d4ed8" text-anchor="middle">CC.205 · CC.222 · CC.235</text>
+      <text x="752" y="103" font-size="7.5" fill="#1d4ed8" text-anchor="middle">CC.249 · CC.250</text>
+      <text x="752" y="117" font-size="7.5" fill="#2563eb" font-weight="600" text-anchor="middle">EOS / Scoliosis CC.34</text>
+      <text x="752" y="131" font-size="7" fill="#3b82f6" text-anchor="middle">R&amp;F Room CC.207</text>
+      <text x="752" y="145" font-size="7" fill="#94a3b8" text-anchor="middle">6 rooms total</text>
+      <circle cx="752" cy="90" r="12" fill="#2563eb" filter="url(#ds2)"/>
+      <text x="752" y="94.5" font-size="10" fill="white" font-weight="900" text-anchor="middle">5</text>
+
+      <!-- STOP 6: Doctor Visit — now top-center (was Radiology Check-In) -->
+      <rect x="402" y="50" width="126" height="98" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="2.2" filter="url(#ds)"/>
+      <text x="465" y="78" font-size="8.5" fill="#166534" font-weight="700" text-anchor="middle">DOCTOR VISIT</text>
+      <text x="465" y="90" font-size="8.5" fill="#166534" font-weight="700" text-anchor="middle">EXAM ROOM</text>
+      <text x="465" y="103" font-size="7.5" fill="#15803d" text-anchor="middle">Clinic Exam Rooms</text>
+      <text x="465" y="116" font-size="7.5" fill="#15803d" text-anchor="middle">B &amp; C Wings</text>
+      <circle cx="465" cy="78" r="12" fill="#16a34a" filter="url(#ds2)"/>
+      <text x="465" y="82.5" font-size="10" fill="white" font-weight="900" text-anchor="middle">6</text>
+
+      <!-- STOP 7: Check-Out — same position A-wing middle -->
+      <rect x="140" y="182" width="112" height="70" rx="8" fill="#e0f7f5" stroke="#00b8a9" stroke-width="2.2" filter="url(#ds)"/>
+      <text x="196" y="206" font-size="8.5" fill="#065f46" font-weight="700" text-anchor="middle">CHECK-OUT</text>
+      <text x="196" y="218" font-size="8.5" fill="#065f46" font-weight="700" text-anchor="middle">&amp; SCHEDULE</text>
+      <text x="196" y="231" font-size="7.5" fill="#0f766e" text-anchor="middle">Clinic Front Desk</text>
+      <text x="196" y="244" font-size="7.5" fill="#0f766e" text-anchor="middle">AC.17B</text>
+      <circle cx="196" cy="217" r="12" fill="#00b8a9" filter="url(#ds2)"/>
+      <text x="196" y="221.5" font-size="10" fill="white" font-weight="900" text-anchor="middle">7</text>
+
+      <!-- PATH ARROWS: all patients -->
+      <!-- 1 Atrium → 3 Rad Check-in: right across corridor to C-wing -->
+      <path d="M 254 174 Q 420 174 534 217" stroke="#00b8a9" stroke-width="2.5" fill="none" marker-end="url(#arr)"/>
+      <text x="390" y="168" font-size="8" fill="#00b8a9" font-weight="700" text-anchor="middle">① → ③</text>
+      <!-- 3 Rad Check-in → 4 Dressing: straight up in C-wing -->
+      <line x1="592" y1="180" x2="592" y2="150" stroke="#00b8a9" stroke-width="2.5" marker-end="url(#arr)"/>
+      <!-- 4 Dressing → 5 X-Ray: right along top -->
+      <line x1="646" y1="88" x2="648" y2="88" stroke="#00b8a9" stroke-width="2.5" marker-end="url(#arr)"/>
+      <text x="640" y="75" font-size="8" fill="#00b8a9" font-weight="700" text-anchor="middle">④→⑤</text>
+      <!-- 5 X-Ray → 6 Doctor: left along top -->
+      <path d="M 650 74 Q 570 58 530 74" stroke="#00b8a9" stroke-width="2.5" fill="none" marker-end="url(#arr)"/>
+      <text x="588" y="48" font-size="8" fill="#00b8a9" font-weight="700" text-anchor="middle">⑤ → ⑥</text>
+      <!-- 6 Doctor → 7 Checkout: down-left -->
+      <path d="M 402 88 Q 320 100 254 200" stroke="#00b8a9" stroke-width="2.5" fill="none" marker-end="url(#arr)"/>
+      <text x="308" y="130" font-size="8" fill="#00b8a9" font-weight="700" text-anchor="middle">⑥ → ⑦</text>
+
+      <!-- Female lab detour arrows -->
+      <g id="female-arrows">
+        <!-- 1 Atrium → 2 Lab (bottom center) -->
+        <path d="M 252 148 Q 300 260 388 278" stroke="#a855f7" stroke-width="2" fill="none" marker-end="url(#arr-p)" stroke-dasharray="7,4" opacity="0.9"/>
+        <text x="290" y="222" font-size="8" fill="#9333ea" font-weight="700" text-anchor="middle">♀ Lab</text>
+        <!-- 2 Lab → 3 Rad Check-in -->
+        <path d="M 530 278 Q 560 240 590 254" stroke="#a855f7" stroke-width="2" fill="none" marker-end="url(#arr-p)" stroke-dasharray="7,4" opacity="0.9"/>
+      </g>
+
+      <!-- Legend bar -->
+      <rect x="10" y="336" width="860" height="44" fill="white" opacity="0.85"/>
+      <line x1="10" y1="336" x2="870" y2="336" stroke="#e2e8f0" stroke-width="1.2"/>
+      <circle cx="34" cy="358" r="7" fill="#16a34a"/><text x="34" y="362" font-size="7.5" fill="white" font-weight="900" text-anchor="middle">1</text><text x="47" y="362" font-size="8" fill="#374151" font-weight="600">Entry/Out</text>
+      <circle cx="118" cy="358" r="7" fill="#a855f7"/><text x="118" y="362" font-size="7.5" fill="white" font-weight="900" text-anchor="middle">2</text><text x="131" y="362" font-size="8" fill="#374151" font-weight="600">Lab ♀</text>
+      <circle cx="192" cy="358" r="7" fill="#f59e0b"/><text x="192" y="362" font-size="7.5" fill="white" font-weight="900" text-anchor="middle">3</text><text x="205" y="362" font-size="8" fill="#374151" font-weight="600">Rad Check-In</text>
+      <circle cx="292" cy="358" r="7" fill="#f97316"/><text x="292" y="362" font-size="7.5" fill="white" font-weight="900" text-anchor="middle">4</text><text x="305" y="362" font-size="8" fill="#374151" font-weight="600">Dressing Room</text>
+      <circle cx="392" cy="358" r="7" fill="#2563eb"/><text x="392" y="362" font-size="7.5" fill="white" font-weight="900" text-anchor="middle">5</text><text x="405" y="362" font-size="8" fill="#374151" font-weight="600">X-Ray Room</text>
+      <circle cx="480" cy="358" r="7" fill="#16a34a"/><text x="480" y="362" font-size="7.5" fill="white" font-weight="900" text-anchor="middle">6</text><text x="493" y="362" font-size="8" fill="#374151" font-weight="600">Doctor Visit</text>
+      <line x1="570" y1="358" x2="590" y2="358" stroke="#00b8a9" stroke-width="2.2"/><text x="596" y="362" font-size="8" fill="#64748b">All patients</text>
+      <line x1="672" y1="358" x2="692" y2="358" stroke="#a855f7" stroke-width="2" stroke-dasharray="5,3"/><text x="698" y="362" font-size="8" fill="#64748b">♀ only path</text>
+    </svg>
+    </div>
+
+    <div class="stop-cards">
+      <div class="sc" style="background:#f0fdf4;border-color:#bbf7d0;">
+        <div class="sc-head"><div class="sc-num" style="background:#16a34a;">1</div><span class="sc-title" style="color:#166534;">Atrium / Entry</span></div>
+        <div class="sc-room" style="color:#15803d;">AC.17 · Appointment Desk AC.17B</div>
+        <div class="sc-desc">Enter via AC.20. Kiosk check-in here. Also where you check out at the end (Stop 7).</div>
+      </div>
+      <div id="card-lab" class="sc" style="background:#fdf2f8;border-color:#e9d5ff;">
+        <div class="sc-head"><div class="sc-num" style="background:#a855f7;">2</div><span class="sc-title" style="color:#7e22ce;">Lab / Blood Draw</span> <span style="font-size:9px;font-weight:700;color:#a855f7;">♀ only</span></div>
+        <div class="sc-room" style="color:#9333ea;">CC.86 · CC.86A · CC.86B</div>
+        <div class="sc-desc">Routine lab sample collected early so results are ready before your X-ray — no waiting after.</div>
+      </div>
+      <div class="sc" style="background:#fef9c3;border-color:#fde68a;">
+        <div class="sc-head"><div class="sc-num" style="background:#f59e0b;">3</div><span class="sc-title" style="color:#92400e;">Radiology Check-In</span></div>
+        <div class="sc-room" style="color:#b45309;">CC.30 · CC.30A · Sub-Waiting CC.30D</div>
+        <div class="sc-desc">Order is pre-scheduled. Quick check-in then straight to dressing rooms next door.</div>
+      </div>
+      <div class="sc" style="background:#fff7ed;border-color:#fed7aa;">
+        <div class="sc-head"><div class="sc-num" style="background:#f97316;">4</div><span class="sc-title" style="color:#9a3412;">Dressing Rooms</span></div>
+        <div class="sc-room" style="color:#c2410c;">CC.30E · CC.30F · CC.30G · CC.30H · CC.30J</div>
+        <div class="sc-desc">Change into gown. Keep your bag with you — no locker. Gown stays on for the doctor visit too.</div>
+      </div>
+      <div class="sc" style="background:#eff6ff;border-color:#bfdbfe;">
+        <div class="sc-head"><div class="sc-num" style="background:#2563eb;">5</div><span class="sc-title" style="color:#1e40af;">X-Ray Rooms</span></div>
+        <div class="sc-room" style="color:#1d4ed8;">CC.205 · CC.222 · CC.235 · CC.249 · CC.250 · EOS CC.34</div>
+        <div class="sc-desc">6 rooms including EOS 3D scanner for scoliosis. Quick and painless — just a few minutes.</div>
+      </div>
+      <div class="sc" style="background:#f0fdf4;border-color:#bbf7d0;">
+        <div class="sc-head"><div class="sc-num" style="background:#16a34a;">6</div><span class="sc-title" style="color:#166534;">Doctor / Exam Room</span></div>
+        <div class="sc-room" style="color:#15803d;">Clinic Exam Rooms · B &amp; C Wings</div>
+        <div class="sc-desc">Your doctor reviews results with you. Stay in your gown — no re-dressing needed.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sh">Pathway Differences</div>
+  <div class="gender-diff">
+    <div class="gd-card gd-female">
+      <div class="gd-tag">♀ Female patients</div>
+      <ul class="gd-list">
+        <li>Routine lab screening step (Stop 2)</li>
+        <li>Sample collected early — results ready for X-ray</li>
+        <li>No waiting for lab results afterward</li>
+      </ul>
+      <div class="gd-note">ℹ️ Scoliosis scans: spine is imaged last. Ask the technician anything.</div>
+    </div>
+    <div class="gd-card gd-male">
+      <div class="gd-tag">♂ Male patients</div>
+      <ul class="gd-list">
+        <li>No lab stop needed</li>
+        <li>Go straight to Radiology after check-in</li>
+        <li>Fewer total stops, shorter visit</li>
+      </ul>
+      <div class="gd-note">⚡ Direct path: Check-In → Radiology → Dressing → X-Ray → Doctor.</div>
+    </div>
+  </div>
+
+  <div class="sh">Day-of Tips</div>
+  <div class="qt-grid">
+    <div class="qt-card"><div class="qt-icon">🧴</div><div><div class="qt-title">Remove metal near the scan area</div><div class="qt-body">Necklaces, belts, underwires — remove anything near your chest, back, or spine.</div></div></div>
+    <div class="qt-card"><div class="qt-icon">❓</div><div><div class="qt-title">Ask questions any time</div><div class="qt-body">Any staff member in scrubs can help redirect you or answer questions.</div></div></div>
+    <div class="qt-card"><div class="qt-icon">🔵</div><div><div class="qt-title">Tuesdays are "Bones Day"</div><div class="qt-body">Specialized spine/bone clinics are often on Tuesdays — the department will be busy.</div></div></div>
+    <div class="qt-card"><div class="qt-icon">🛗</div><div><div class="qt-title">Elevators are nearby</div><div class="qt-body">A, B, C &amp; D elevator banks are on this floor. Follow signs or ask any staff member.</div></div></div>
+  </div>
+
+</div><!-- end tips panel -->
+
+<!-- ══ WATCH VIDEO TAB ══ -->
+<div id="panel-video" class="panel">
+
+  <div class="intro-strip" style="background:linear-gradient(135deg,#0d1b2a 0%,#1e1035 100%);">
+    <div class="intro-strip-icon">🎬</div>
+    <div class="intro-strip-text">
+      <strong>Watch before your visit.</strong> This short video walks through everything — what to wear, how to check in, where to go, and what happens in the X-ray room. Takes about 3 minutes.
+    </div>
+  </div>
+
+  <!-- VIDEO PLAYER CARD -->
+  <div style="background:white;border-radius:var(--r);border:1.5px solid var(--border);box-shadow:var(--shadow);overflow:hidden;margin-bottom:16px;">
+
+    <!-- Player area -->
+    <div style="position:relative;background:#0d1b2a;border-radius:var(--r) var(--r) 0 0;overflow:hidden;">
+      <video id="visit-video"
+        src="YOUR_VIDEO_FILE.mp4"
+        style="width:100%;display:block;max-height:420px;background:#0d1b2a;"
+        preload="metadata"
+        playsinline
+        controlslist="nodownload"
+        onplay="onVideoPlay()"
+        ontimeupdate="onTimeUpdate()"
+        onended="onVideoEnd()">
+        Your browser does not support HTML5 video.
+      </video>
+
+      <!-- placeholder overlay shown when no real src is set -->
+      <div id="video-placeholder" style="position:absolute;inset:0;background:#0d1b2a;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:32px;">
+        <div style="width:64px;height:64px;border-radius:50%;border:3px solid rgba(0,184,169,0.4);display:flex;align-items:center;justify-content:center;">
+          <div style="width:0;height:0;border-top:14px solid transparent;border-bottom:14px solid transparent;border-left:22px solid var(--teal);margin-left:4px;"></div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-family:'Syne',sans-serif;font-size:0.97rem;font-weight:700;color:white;margin-bottom:6px;">Your Visit Walkthrough</div>
+          <div style="font-size:0.78rem;color:rgba(255,255,255,0.45);line-height:1.5;max-width:280px;">Video will appear here once the MP4 file link is added.<br>Replace <code style="background:rgba(255,255,255,0.1);padding:1px 6px;border-radius:4px;font-size:0.75rem;">YOUR_VIDEO_FILE.mp4</code> in the source.</div>
+        </div>
+      </div>
+
+      <!-- watched badge -->
+      <div id="watched-badge" style="display:none;position:absolute;top:12px;right:12px;background:var(--green);color:white;font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;">✓ Watched</div>
+    </div>
+
+    <!-- Custom controls bar -->
+    <div style="padding:14px 18px 10px;border-bottom:1px solid var(--border);">
+      <!-- Progress track -->
+      <div id="vid-track" onclick="seekVideo(event)" style="height:6px;background:#f1f5f9;border-radius:10px;cursor:pointer;position:relative;margin-bottom:12px;">
+        <div id="vid-progress" style="height:100%;width:0%;background:linear-gradient(90deg,var(--teal),#00e0cf);border-radius:10px;pointer-events:none;transition:width 0.25s linear;"></div>
+        <div id="vid-thumb" style="position:absolute;top:50%;width:14px;height:14px;border-radius:50%;background:var(--teal-dk);transform:translate(-50%,-50%);left:0%;pointer-events:none;box-shadow:0 1px 4px rgba(0,0,0,0.2);"></div>
+      </div>
+      <!-- Buttons row -->
+      <div style="display:flex;align-items:center;gap:12px;">
+        <button onclick="togglePlay()" id="play-btn"
+          style="background:var(--navy);color:white;border:none;border-radius:8px;padding:8px 18px;font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;flex-shrink:0;">
+          <span id="play-icon">▶</span> <span id="play-label">Play</span>
+        </button>
+        <div style="font-size:0.78rem;color:var(--slate);font-weight:600;" id="time-display">0:00 / 0:00</div>
+        <div style="flex:1;"></div>
+        <button onclick="toggleMute()" id="mute-btn"
+          style="background:#f1f5f9;border:none;border-radius:8px;padding:8px 12px;font-size:0.82rem;cursor:pointer;color:var(--slate);">
+          🔊
+        </button>
+      </div>
+    </div>
+
+    <!-- Chapter markers -->
+    <div style="padding:16px 18px 18px;">
+      <div style="font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--teal-dk);margin-bottom:12px;">Chapters — click to jump</div>
+      <div style="display:flex;flex-direction:column;gap:8px;" id="chapters">
+
+        <div class="chapter-item" id="ch-0" data-time="0" onclick="jumpTo(0)"
+          style="display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:10px;border:1.5px solid var(--border);cursor:pointer;transition:all 0.18s;background:white;">
+          <div style="width:36px;height:36px;border-radius:10px;background:var(--orange-lt);border:1.5px solid var(--orange);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;">👕</div>
+          <div style="flex:1;min-width:0;">
+            <div style="font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;color:var(--navy);margin-bottom:1px;">What to Wear From Home</div>
+            <div style="font-size:0.75rem;color:var(--slate);">Gym clothes, no metal, what to avoid</div>
+          </div>
+        </div>
+
+        <div class="chapter-item" id="ch-1" data-time="20" onclick="jumpTo(20)"
+          style="display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:10px;border:1.5px solid var(--border);cursor:pointer;transition:all 0.18s;background:white;">
+          <div style="width:36px;height:36px;border-radius:10px;background:var(--teal-lt);border:1.5px solid var(--teal);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;">🖥️</div>
+          <div style="flex:1;min-width:0;">
+            <div style="font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;color:var(--navy);margin-bottom:1px;">Check-In &amp; Kiosk Walkthrough</div>
+            <div style="font-size:0.75rem;color:var(--slate);">Pre-arrival forms, kiosk check-in, the desk</div>
+          </div>
+        </div>
+
+        <div class="chapter-item" id="ch-2" data-time="40" onclick="jumpTo(40)"
+          style="display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:10px;border:1.5px solid var(--border);cursor:pointer;transition:all 0.18s;background:white;">
+          <div style="width:36px;height:36px;border-radius:10px;background:#ede9fe;border:1.5px solid var(--purple);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;">🗺️</div>
+          <div style="flex:1;min-width:0;">
+            <div style="font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;color:var(--navy);margin-bottom:1px;">How to Find Each Location</div>
+            <div style="font-size:0.75rem;color:var(--slate);">Atrium → Radiology → X-Ray → Doctor</div>
+          </div>
+        </div>
+
+        <div class="chapter-item" id="ch-3" data-time="60" onclick="jumpTo(60)"
+          style="display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:10px;border:1.5px solid var(--border);cursor:pointer;transition:all 0.18s;background:white;">
+          <div style="width:36px;height:36px;border-radius:10px;background:var(--blue-lt);border:1.5px solid var(--blue);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;">📸</div>
+          <div style="flex:1;min-width:0;">
+            <div style="font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;color:var(--navy);margin-bottom:1px;">What Happens in the X-Ray Room</div>
+            <div style="font-size:0.75rem;color:var(--slate);">What to expect, how long it takes, what's next</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Manual confirm fallback -->
+  <div style="background:white;border-radius:var(--r);border:1.5px dashed var(--border);padding:16px 20px;display:flex;align-items:center;gap:14px;">
+    <div style="flex:1;">
+      <div style="font-size:0.85rem;font-weight:600;color:var(--navy);margin-bottom:2px;">Haven't watched yet? Mark when done.</div>
+      <div style="font-size:0.78rem;color:var(--slate);">The video tab unlocks automatically when you reach the end. Tap below if you've already watched it on another device.</div>
+    </div>
+    <button onclick="markVideoWatched()" id="manual-watched-btn"
+      style="background:var(--navy);color:white;border:none;border-radius:10px;padding:10px 18px;font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0;">
+      Mark as watched
+    </button>
+  </div>
+
+</div><!-- end video panel -->
+
+<div class="footer">
+  <strong>Scottish Rite for Children</strong> · Radiology &amp; Lab Visit Guide · Clinic Level<br>
+  Times are approximate. Staff will guide you through each step. Questions? Ask anyone in scrubs.
+</div>
+</div><!-- end main -->
+
+<script>
+const opened = new Set();
+const tabsVisited = new Set();
+let videoWatched = false;
+
+/* ── ACCORDION ── */
+function toggleStep(el) {
+  const wasOpen = el.classList.contains('open');
+  document.querySelectorAll('.step-item').forEach(s => {
+    s.classList.remove('open');
+    s.querySelector('.step-body').classList.remove('open');
+  });
+  if (!wasOpen) {
+    el.classList.add('open');
+    el.querySelector('.step-body').classList.add('open');
+    opened.add(el);
+  }
+  updateProgress();
+}
+
+function updateProgress() {
+  const visible = [...document.querySelectorAll('.step-item')].filter(s => getComputedStyle(s).display !== 'none');
+  const seen = visible.filter(s => opened.has(s)).length;
+  const total = visible.length;
+  const pct = total ? (seen / total * 100) : 0;
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-label').textContent = seen + ' of ' + total + ' steps';
+}
+
+/* ── TABS ── */
+function switchTab(name, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel-' + name).classList.add('active');
+  btn.classList.add('active');
+  tabsVisited.add(name);
+  updateVerifyCard();
+}
+
+/* ── VERIFY CARD ── */
+function updateVerifyCard() {
+  const hasVisit    = tabsVisited.has('visit');
+  const hasDressing = tabsVisited.has('dressing');
+  const hasTips     = tabsVisited.has('tips');
+  const hasVideo    = videoWatched;
+
+  function setPill(elId, spanId, done) {
+    const el = document.getElementById(elId);
+    const sp = document.getElementById(spanId);
+    if (!el || !sp) return;
+    sp.textContent = done ? '✓' : '○';
+    el.style.background  = done ? '#f0fdf4' : '#f8fafc';
+    el.style.borderColor = done ? '#16a34a' : '#e2e8f0';
+    el.style.color       = done ? '#16a34a' : '#64748b';
+    el.style.fontWeight  = done ? '700' : '600';
+  }
+  setPill('check-visit',    'chk-v',   hasVisit);
+  setPill('check-dressing', 'chk-d',   hasDressing);
+  setPill('check-tips',     'chk-t',   hasTips);
+  setPill('check-video',    'chk-vid', hasVideo);
+
+  const allDone = hasVisit && hasDressing && hasTips && hasVideo;
+  const card  = document.getElementById('verify-card');
+  const form  = document.getElementById('confirm-form');
+  const title = document.getElementById('verify-title');
+  const sub   = document.getElementById('verify-sub');
+  const icon  = document.getElementById('verify-icon');
+
+  if (document.getElementById('confirmed-state').style.display !== 'none') return;
+
+  if (allDone) {
+    card.style.borderColor = 'var(--teal)';
+    icon.textContent  = '✅';
+    title.textContent = "You're ready to confirm!";
+    sub.textContent   = "You've reviewed all sections and watched the video. Tick the boxes below to confirm.";
+    form.style.display = 'block';
+  } else {
+    card.style.borderColor = 'var(--border)';
+    icon.textContent  = '🔒';
+    const remaining = [
+      !hasVisit    && 'Your Visit',
+      !hasDressing && 'What to Wear',
+      !hasTips     && 'Tips & Map',
+      !hasVideo    && 'Watch Video'
+    ].filter(Boolean);
+    title.textContent = 'Almost there — a few things left';
+    sub.textContent   = 'Still to complete: ' + remaining.join(', ') + '.';
+    form.style.display = 'none';
+  }
+}
+
+/* ── CONFIRM FORM ── */
+function checkConfirm() {
+  const allChecked = document.getElementById('c1').checked &&
+                     document.getElementById('c2').checked &&
+                     document.getElementById('c3').checked &&
+                     document.getElementById('c4').checked;
+  const btn = document.getElementById('confirm-btn');
+  btn.disabled = !allChecked;
+  btn.style.background = allChecked ? 'var(--teal)' : '#e2e8f0';
+  btn.style.color      = allChecked ? 'white'       : '#94a3b8';
+  btn.style.cursor     = allChecked ? 'pointer'     : 'not-allowed';
+}
+
+function submitConfirm() {
+  document.getElementById('confirm-form').style.display    = 'none';
+  document.getElementById('confirmed-state').style.display = 'block';
+  const card = document.getElementById('verify-card');
+  card.style.borderColor = '#16a34a';
+  card.style.background  = '#f0fdf4';
+  document.getElementById('verify-icon').textContent  = '🎉';
+  document.getElementById('verify-title').textContent = "All confirmed — you're ready!";
+  document.getElementById('verify-sub').textContent   = 'Your confirmation has been recorded. See you soon!';
+}
+
+/* ── GENDER ── */
+function setGender(g, btn) {
+  document.querySelectorAll('.gbtn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const note = document.getElementById('gnote');
+  const mTag = document.getElementById('map-gender-tag');
+  const lab  = document.getElementById('lab-stop');
+  const fArr = document.getElementById('female-arrows');
+  const labCard = document.getElementById('card-lab');
+
+  if (g === 'female') {
+    document.body.classList.remove('show-male');
+    document.body.classList.add('show-female');
+    note.textContent = '⚕ Includes lab screening step';
+    if(mTag){ mTag.textContent='♀ Female patients'; mTag.style.background='#fdf2f8'; mTag.style.color='#a855f7'; }
+    if(lab) lab.style.opacity='1';
+    if(fArr) fArr.style.opacity='1';
+    if(labCard) labCard.style.opacity='1';
+  } else {
+    document.body.classList.remove('show-female');
+    document.body.classList.add('show-male');
+    note.textContent = '⚡ Fast-track — no lab stop';
+    if(mTag){ mTag.textContent='♂ Male patients'; mTag.style.background='#eff6ff'; mTag.style.color='#2563eb'; }
+    if(lab) lab.style.opacity='0.15';
+    if(fArr) fArr.style.opacity='0.08';
+    if(labCard) labCard.style.opacity='0.2';
+  }
+  opened.clear();
+  updateProgress();
+}
+
+/* ── VIDEO PLAYER ── */
+function onVideoPlay() {
+  const ph = document.getElementById('video-placeholder');
+  if (ph) ph.style.display = 'none';
+  document.getElementById('play-icon').textContent  = '⏸';
+
+  document.getElementById('play-label').textContent = 'Pause';
+  const vid = document.getElementById('visit-video');
+  if (vid.duration) {
+    document.getElementById('time-display').textContent =
+      fmtTime(vid.currentTime) + ' / ' + fmtTime(vid.duration);
+  }
+}
+
+function onTimeUpdate() {
+  const vid = document.getElementById('visit-video');
+  if (!vid.duration) return;
+  const pct = (vid.currentTime / vid.duration) * 100;
+  document.getElementById('vid-progress').style.width = pct + '%';
+  document.getElementById('vid-thumb').style.left     = pct + '%';
+  document.getElementById('time-display').textContent = fmtTime(vid.currentTime) + ' / ' + fmtTime(vid.duration);
+  highlightChapter(vid.currentTime);
+  // auto-mark watched at 85%
+  if (pct >= 85 && !videoWatched) markVideoWatched();
+}
+
+function onVideoEnd() {
+  document.getElementById('play-icon').textContent  = '▶';
+  document.getElementById('play-label').textContent = 'Replay';
+  markVideoWatched();
+}
+
+function togglePlay() {
+  const vid = document.getElementById('visit-video');
+  const ph  = document.getElementById('video-placeholder');
+  if (ph && ph.style.display !== 'none') ph.style.display = 'none';
+  if (vid.paused) { vid.play(); }
+  else {
+    vid.pause();
+    document.getElementById('play-icon').textContent  = '▶';
+    document.getElementById('play-label').textContent = 'Play';
+  }
+}
+
+function toggleMute() {
+  const vid = document.getElementById('visit-video');
+  vid.muted = !vid.muted;
+  document.getElementById('mute-btn').textContent = vid.muted ? '🔇' : '🔊';
+}
+
+function jumpTo(secs) {
+  const vid = document.getElementById('visit-video');
+  const ph  = document.getElementById('video-placeholder');
+  if (ph && ph.style.display !== 'none') ph.style.display = 'none';
+  vid.currentTime = secs;
+  vid.play();
+}
+
+function seekVideo(e) {
+  const vid   = document.getElementById('visit-video');
+  const track = document.getElementById('vid-track');
+  const rect  = track.getBoundingClientRect();
+  const pct   = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+  if (vid.duration) vid.currentTime = pct * vid.duration;
+}
+
+const chapters = [0, 20, 40, 60];
+function highlightChapter(t) {
+  let active = 0;
+  for (let i = 0; i < chapters.length; i++) { if (t >= chapters[i]) active = i; }
+  document.querySelectorAll('.chapter-item').forEach((el, i) => {
+    if (i === active) {
+      el.style.background   = 'var(--teal-lt)';
+      el.style.borderColor  = 'var(--teal)';
+    } else {
+      el.style.background   = 'white';
+      el.style.borderColor  = 'var(--border)';
+    }
+  });
+}
+
+function markVideoWatched() {
+  if (videoWatched) return;
+  videoWatched = true;
+  const badge = document.getElementById('watched-badge');
+  if (badge) badge.style.display = 'block';
+  const btn = document.getElementById('manual-watched-btn');
+  if (btn) {
+    btn.textContent = '✓ Marked as watched';
+    btn.style.background = 'var(--green)';
+    btn.disabled = true;
+  }
+  tabsVisited.add('video');
+  updateVerifyCard();
+}
+
+function fmtTime(s) {
+  if (!s || isNaN(s)) return '0:00';
+  const m = Math.floor(s / 60);
+  const sec = Math.floor(s % 60);
+  return m + ':' + String(sec).padStart(2, '0');
+}
+
+/* ── INIT ── */
+document.addEventListener('DOMContentLoaded', () => {
+  tabsVisited.add('visit');
+  updateProgress();
+  updateVerifyCard();
+});
+</script>
+</body>
+</html>
